@@ -1,3 +1,5 @@
+package contas;
+
 public class ContaPoupanca implements ContaBancaria{
     private double saldo;
 

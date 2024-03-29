@@ -1,3 +1,5 @@
+package contas;
+
 public interface ContaBancaria {
     public void depositar(double valor);
 

@@ -1,3 +1,5 @@
+package contas;
+
 public class ContaCorrente implements ContaBancaria {
     private double saldo;
 

@@ -1,3 +1,5 @@
+package clientes;
+
 import java.time.LocalDate;
 
 public class ClienteComum extends Pessoa {
