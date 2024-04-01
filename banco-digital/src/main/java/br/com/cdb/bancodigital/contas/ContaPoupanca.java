@@ -1,6 +1,6 @@
-package contas;
+package br.com.cdb.bancodigital.contas;
 
-public class ContaCorrente implements ContaBancaria {
+public class ContaPoupanca implements ContaBancaria{
     private double saldo;
 
     @Override
