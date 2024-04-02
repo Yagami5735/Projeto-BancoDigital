@@ -1,13 +1,10 @@
 package br.com.cdb.bancodigital.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Setter;
-import org.antlr.v4.runtime.misc.NotNull;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 
@@ -20,14 +17,13 @@ public class Cliente {
     private String cpf;
     private  String nome;
 
-    private  String dataNascimento;
-    @Setter
+    private  LocalDate dataNascimento;
     private String endereco;
 
     public Cliente(){
 
     }
-    public Cliente(String nome, String cpf, String dataNascimento, String endereco)
+    public Cliente(String nome, String cpf, LocalDate dataNascimento, String endereco)
     {
         this.cpf = cpf;
         this.nome = nome;
@@ -46,7 +42,7 @@ public class Cliente {
         return id;
     }
 
-    public String getDataNascimento() {
+    public LocalDate getDataNascimento() {
         return dataNascimento;
     }
 

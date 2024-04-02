@@ -5,6 +5,7 @@ import br.com.cdb.bancodigital.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +15,7 @@ public class ClienteService {
     private ClienteRepository clienteRepository;
     private boolean validCPF = false, validNome = false;
 
-    public Cliente addCliente(String nome, String cpf, String dataNascimento, String endereco){
+    public Cliente addCliente(String nome, String cpf, LocalDate dataNascimento, String endereco){
         if(cpf.length() == 11)validCPF = true;
         if(!nome.isBlank())validNome = true;
         if(validNome && validCPF)

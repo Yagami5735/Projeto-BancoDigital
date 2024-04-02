@@ -20,7 +20,7 @@ public class ClienteController {
     @Autowired
     private ClienteService clienteService;
     @PostMapping("/add/{nome}/{cpf}")
-    public void addCliente(@PathVariable String nome, @PathVariable String cpf, @PathVariable String dataNascimento, @PathVariable String endereco){
+    public void addCliente(@PathVariable String nome, @PathVariable String cpf, @PathVariable LocalDate dataNascimento, @PathVariable String endereco){
         clienteService.addCliente(nome, cpf, dataNascimento, endereco);
     }
 
