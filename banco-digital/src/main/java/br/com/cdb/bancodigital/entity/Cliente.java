@@ -1,5 +1,6 @@
 package br.com.cdb.bancodigital.entity;
 
+import br.com.cdb.bancodigital.service.TiposCliente;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,18 +18,21 @@ public class Cliente {
     private String cpf;
     private  String nome;
 
-    private  LocalDate dataNascimento;
+    private TiposCliente classe;
+
     private String endereco;
+    private  LocalDate dataNascimento;
 
     public Cliente(){
 
     }
-    public Cliente(String nome, String cpf, LocalDate dataNascimento, String endereco)
+    public Cliente(String nome, String cpf, LocalDate dataNascimento, String endereco, TiposCliente classe)
     {
         this.cpf = cpf;
         this.nome = nome;
         this.dataNascimento = dataNascimento;
         this.endereco = endereco;
+        this.classe = classe;
     }
 
     public String getNome() {
@@ -50,4 +54,7 @@ public class Cliente {
         return endereco;
     }
 
+    public TiposCliente getClasse() {
+        return classe;
+    }
 }

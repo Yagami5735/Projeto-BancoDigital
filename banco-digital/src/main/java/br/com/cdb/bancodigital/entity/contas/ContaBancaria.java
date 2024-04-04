@@ -1,4 +1,4 @@
-package br.com.cdb.bancodigital.contas;
+package br.com.cdb.bancodigital.entity.contas;
 
 public interface ContaBancaria {
     public void depositar(double valor);

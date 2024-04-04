@@ -19,19 +19,19 @@ public class ClienteController {
 
     @Autowired
     private ClienteService clienteService;
-    @PostMapping("/add/{nome}/{cpf}")
+    /*@PostMapping("/add/{nome}/{cpf}")
     public void addCliente(@PathVariable String nome, @PathVariable String cpf, @PathVariable LocalDate dataNascimento, @PathVariable String endereco){
         clienteService.addCliente(nome, cpf, dataNascimento, endereco);
-    }
+    }*/
 
     @PostMapping("/add")
     public ResponseEntity<String> addCliente(@RequestBody Cliente cliente){
-        Cliente clienteAdicionado = clienteService.addCliente(cliente.getNome(), cliente.getCpf(), cliente.getDataNascimento(), cliente.getEndereco());
+        Cliente clienteAdicionado = clienteService.addCliente(cliente.getNome(), cliente.getCpf(), cliente.getDataNascimento(), cliente.getEndereco(), cliente.getClasse());
         if(clienteAdicionado != null){
             return new ResponseEntity<>("Cliente adicionado com Sucesso!", HttpStatus.CREATED);
         }
         else{
-            return new ResponseEntity<>("Nome, cpf ou data de nascimento invalido(s)", HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>("Nome, cpf ou data de nascimento invalido(s)", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -43,8 +43,8 @@ public class ClienteController {
 
     @DeleteMapping("/removeByID")
     public ResponseEntity<String> removeClienteByID(@RequestBody Cliente cliente){
-        clienteService.removeCLienteByID(cliente.getId());
-        return new ResponseEntity<>("Cliente removido com sucesso!", HttpStatus.OK);
+        if(clienteService.removeCLienteByID(cliente.getId())) return new ResponseEntity<>("Removido com sucesso!", HttpStatus.OK);
+        else return new ResponseEntity<>("Cliente não encontrado!", HttpStatus.OK);
     }
 
     @GetMapping("/all")
@@ -55,7 +55,7 @@ public class ClienteController {
 
     @GetMapping("/searchByID")
     public ResponseEntity<?> getClienteByID(@RequestBody Cliente cliente){
-
+        if(clienteService.getClienteByID(cliente.getId()).isEmpty()) return new ResponseEntity<>("Cliente não encontrado", HttpStatus.OK);
         return new ResponseEntity<>(clienteService.getClienteByID(cliente.getId()), HttpStatus.OK);
     }
 }
