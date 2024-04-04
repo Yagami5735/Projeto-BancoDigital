@@ -1,10 +1,7 @@
 package br.com.cdb.bancodigital.entity;
 
 import br.com.cdb.bancodigital.service.TiposCliente;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Setter;
 
 import java.time.LocalDate;
@@ -22,6 +19,9 @@ public class Cliente {
 
     private String endereco;
     private  LocalDate dataNascimento;
+
+    private boolean contaPoupanca = false;
+    private boolean contaCorrente = false;
 
     public Cliente(){
 
@@ -56,5 +56,21 @@ public class Cliente {
 
     public TiposCliente getClasse() {
         return classe;
+    }
+
+    public boolean isContaPoupanca() {
+        return contaPoupanca;
+    }
+
+    public void setContaPoupanca(boolean contaPoupanca) {
+        this.contaPoupanca = contaPoupanca;
+    }
+
+    public boolean isContaCorrente() {
+        return contaCorrente;
+    }
+
+    public void setContaCorrente(boolean contaCorrente) {
+        this.contaCorrente = contaCorrente;
     }
 }
