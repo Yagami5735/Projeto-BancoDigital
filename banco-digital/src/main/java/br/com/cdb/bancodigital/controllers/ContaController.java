@@ -31,8 +31,40 @@ public class ContaController {
     @PostMapping("/addContaPoupanca")
     public ResponseEntity<String> addContaPoupanca(@RequestBody Cliente cliente){
         ContaPoupanca conta = contaService.criarContaPoupanca(cliente, 0.0);
-        if(conta != null) return new ResponseEntity<>("Conta adicionada com sucesso!", HttpStatus.CREATED);
+        if(conta != null) return new ResponseEntity<>("Conta poupanca adicionada com sucesso!", HttpStatus.CREATED);
         else return new ResponseEntity<>("Cliente já possui uma conta poupanca", HttpStatus.CONFLICT );
+    }
+
+    @DeleteMapping("/removeContaCorrente")
+    public ResponseEntity<String> deleteContaCorrente(@RequestBody ContaCorrente conta){
+        if(contaService.deleteContaCorrente(conta)){
+            return new ResponseEntity<>("Conta deletada com sucesso!", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Conta não encontrada!", HttpStatus.CONFLICT);
+    }
+
+    @DeleteMapping("/removeContaPoupanca")
+    public ResponseEntity<String> deleteContaCorrente(@RequestBody ContaPoupanca conta){
+        if(contaService.deleteContaPoupanca(conta)){
+            return new ResponseEntity<>("Conta deletada com sucesso!", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Conta não encontrada!", HttpStatus.CONFLICT);
+    }
+
+    @DeleteMapping("/removeContaCorrenteByID")
+    public ResponseEntity<String> deleteContaCorrenteByID(@RequestBody ContaCorrente conta){
+        if(contaService.deleContaCorrenteByID(conta.getIdContaCorrente())){
+            return new ResponseEntity<>("Conta deletada com sucesso!", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Conta não encontrada!", HttpStatus.OK);
+    }
+
+    @DeleteMapping("/removeContaPoupancaByID")
+    public ResponseEntity<String> deleteContaPoupancaByID(@RequestBody ContaPoupanca conta){
+        if(contaService.deleteContaPoupancaByID(conta.getIdContaPoupanca())){
+            return new ResponseEntity<>("Conta deletada com sucesso!", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Conta não encontrada!", HttpStatus.OK);
     }
 
     @GetMapping("/searchAllContaPoupanca")

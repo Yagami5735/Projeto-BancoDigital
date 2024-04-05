@@ -12,6 +12,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ContaService {
@@ -39,30 +40,73 @@ public class ContaService {
         }
     }
     public ContaCorrente criarContaCorrente(Cliente cliente, double saldoInicial) {
-        Cliente clienteExistente = clienteRepository.findByCpf(cliente.getCpf());
-        if (clienteExistente == null) cliente = clienteRepository.save(cliente);
-        else 
 
-        if(!cliente.isContaCorrente()){
+        Optional<Cliente> clienteExistente = Optional.ofNullable(clienteRepository.findByCpf(cliente.getCpf()));
+
+        if (clienteExistente.isPresent()) cliente = clienteExistente.get();
+        else cliente = clienteRepository.save(cliente);
+
+        if (!cliente.isContaCorrente()) {
             ContaCorrente conta = new ContaCorrente(cliente);
             conta.depositar(saldoInicial);
             cliente.setContaCorrente(true);
             return contaCorrenteRepository.save(conta);
         }
+
         return null;
     }
 
     public ContaPoupanca criarContaPoupanca(Cliente cliente, double saldoInicial) {
-        Cliente clienteExistente = clienteRepository.findByCpf(cliente.getCpf());
-        if (clienteExistente == null) cliente = clienteRepository.save(cliente);
 
-        if(!cliente.isContaPoupanca()){
+        Optional<Cliente> clienteExistente = Optional.ofNullable(clienteRepository.findByCpf(cliente.getCpf()));
+
+        if (clienteExistente.isPresent()) cliente = clienteExistente.get();
+        else cliente = clienteRepository.save(cliente);
+
+        if (!cliente.isContaPoupanca()) {
             ContaPoupanca conta = new ContaPoupanca(cliente);
             conta.depositar(saldoInicial);
             cliente.setContaPoupanca(true);
             return contaPoupancaRepository.save(conta);
         }
+
         return null;
+    }
+
+    public boolean deleteContaCorrente(ContaCorrente conta){
+        if(contaCorrenteRepository.existsById(conta.getIdContaCorrente())){
+            contaCorrenteRepository.getReferenceById(conta.getIdContaCorrente()).getCliente().setContaCorrente(false);
+            contaCorrenteRepository.deleteById(conta.getIdContaCorrente());
+            return true;
+        }
+        return false;
+    }
+
+    public boolean deleteContaPoupanca(ContaPoupanca conta){
+        if(contaPoupancaRepository.existsById(conta.getIdContaPoupanca())){
+            contaPoupancaRepository.getReferenceById(conta.getIdContaPoupanca()).getCliente().setContaPoupanca(false);
+            contaPoupancaRepository.deleteById(conta.getIdContaPoupanca());
+            return true;
+        }
+        return false;
+    }
+
+    public boolean deleContaCorrenteByID(long id){
+        if(contaCorrenteRepository.existsById(id)){
+            contaCorrenteRepository.getReferenceById(id).getCliente().setContaCorrente(false);
+            contaCorrenteRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean deleteContaPoupancaByID(long id){
+        if(contaPoupancaRepository.existsById(id)){
+            contaPoupancaRepository.getReferenceById(id).getCliente().setContaPoupanca(false);
+            contaPoupancaRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 
     public List<ContaPoupanca> getAllContaPoupanca(){
