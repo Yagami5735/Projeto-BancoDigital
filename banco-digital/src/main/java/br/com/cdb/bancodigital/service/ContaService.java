@@ -1,6 +1,7 @@
 package br.com.cdb.bancodigital.service;
 
 import br.com.cdb.bancodigital.entity.Cliente;
+import br.com.cdb.bancodigital.entity.contas.ContaBancaria;
 import br.com.cdb.bancodigital.entity.contas.ContaCorrente;
 import br.com.cdb.bancodigital.entity.contas.ContaPoupanca;
 import br.com.cdb.bancodigital.repository.ClienteRepository;
@@ -109,12 +110,27 @@ public class ContaService {
         return false;
     }
 
+    public Object mostrarSaldoContaCorrente(long id){
+        if(contaCorrenteRepository.existsById(id)) return contaCorrenteRepository.getReferenceById(id).getSaldo();
+        return null;
+    }
+
+    public Object mostrarSaldoContaPoupanca(long id){
+        if(contaPoupancaRepository.existsById(id)) return contaPoupancaRepository.getReferenceById(id).getSaldo();
+        return null;
+    }
+
     public List<ContaPoupanca> getAllContaPoupanca(){
         return contaPoupancaRepository.findAll();
     }
 
     public List<ContaCorrente> getAllContaCorrente(){
         return contaCorrenteRepository.findAll();
+    }
+
+    public void depositarContaCorrente(ContaCorrente conta, long id){
+        Optional<ContaCorrente> contaCorrente = contaCorrenteRepository.findById(id);
+        if()
     }
 
 }

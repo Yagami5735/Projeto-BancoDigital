@@ -67,6 +67,26 @@ public class ContaController {
         return new ResponseEntity<>("Conta não encontrada!", HttpStatus.OK);
     }
 
+    @GetMapping("/getSaldoContaCorrente")
+    public ResponseEntity<?> getSaldoContaCorrente(@RequestBody ContaCorrente conta){
+        if(contaService.mostrarSaldoContaCorrente(conta.getIdContaCorrente()) != null){
+            String msg = "O saldo é: R$";
+            msg = msg + contaService.mostrarSaldoContaCorrente(conta.getIdContaCorrente());
+            return new ResponseEntity<>(msg, HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Conta não encontrada!", HttpStatus.OK);
+    }
+
+    @GetMapping("/getSaldoContaPoupanca")
+    public ResponseEntity<?> getSaldoContaPoupanca(@RequestBody ContaPoupanca conta){
+        if(contaService.mostrarSaldoContaPoupanca(conta.getIdContaPoupanca()) != null){
+            String msg = "O saldo é: R$";
+            msg = msg + contaService.mostrarSaldoContaPoupanca(conta.getIdContaPoupanca());
+            return new ResponseEntity<>(msg, HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Conta não encontrada!", HttpStatus.OK);
+    }
+
     @GetMapping("/searchAllContaPoupanca")
     public  ResponseEntity<?> getAllContaPoupanca(){
         return new ResponseEntity<>(contaService.getAllContaPoupanca(), HttpStatus.OK);
