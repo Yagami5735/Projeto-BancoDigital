@@ -3,8 +3,10 @@ package br.com.cdb.bancodigital.service;
 import br.com.cdb.bancodigital.entity.Cliente;
 import br.com.cdb.bancodigital.entity.contas.ContaCorrente;
 import br.com.cdb.bancodigital.entity.contas.ContaPoupanca;
+import br.com.cdb.bancodigital.repository.ClienteRepository;
 import br.com.cdb.bancodigital.repository.ContaCorrenteRepository;
 import br.com.cdb.bancodigital.repository.ContaPoupancaRepository;
+import org.antlr.v4.runtime.misc.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,8 @@ public class ContaService {
     private ContaCorrenteRepository contaCorrenteRepository;
     @Autowired
     private ContaPoupancaRepository contaPoupancaRepository;
+    @Autowired
+    private ClienteRepository clienteRepository;
 
     @Scheduled(cron = "0 0 0 1 * ?")
     public void descontarTaxaManutencao() {
@@ -34,26 +38,39 @@ public class ContaService {
             conta.creditarTaxa();
         }
     }
-
     public ContaCorrente criarContaCorrente(Cliente cliente, double saldoInicial) {
+        Cliente clienteExistente = clienteRepository.findByCpf(cliente.getCpf());
+        if (clienteExistente == null) cliente = clienteRepository.save(cliente);
+        else 
+
         if(!cliente.isContaCorrente()){
             ContaCorrente conta = new ContaCorrente(cliente);
             conta.depositar(saldoInicial);
-            contaCorrenteRepository.save(conta);
             cliente.setContaCorrente(true);
-            return conta;
+            return contaCorrenteRepository.save(conta);
         }
         return null;
     }
 
     public ContaPoupanca criarContaPoupanca(Cliente cliente, double saldoInicial) {
+        Cliente clienteExistente = clienteRepository.findByCpf(cliente.getCpf());
+        if (clienteExistente == null) cliente = clienteRepository.save(cliente);
+
         if(!cliente.isContaPoupanca()){
             ContaPoupanca conta = new ContaPoupanca(cliente);
             conta.depositar(saldoInicial);
-            contaPoupancaRepository.save(conta);
             cliente.setContaPoupanca(true);
-            return conta;
+            return contaPoupancaRepository.save(conta);
         }
         return null;
     }
+
+    public List<ContaPoupanca> getAllContaPoupanca(){
+        return contaPoupancaRepository.findAll();
+    }
+
+    public List<ContaCorrente> getAllContaCorrente(){
+        return contaCorrenteRepository.findAll();
+    }
+
 }
