@@ -96,4 +96,19 @@ public class ContaController {
     public  ResponseEntity<?> getAllContaCorrente(){
         return new ResponseEntity<>(contaService.getAllContaCorrente(), HttpStatus.OK);
     }
+
+    @PostMapping("/depositarContaCorrente")
+    public ResponseEntity<?> depositarContaCorrente(@RequestBody ContaCorrente conta, @RequestParam double saldo){
+        if(contaService.depositarContaCorrente(conta.getIdContaCorrente(), saldo))return new ResponseEntity<>("Valor depositado com sucesso!", HttpStatus.OK);
+
+        return new ResponseEntity<>("Conta não encontrada ou valor inválido!", HttpStatus.OK);
+
+    }
+    @PostMapping("/depositarContaPoupanca")
+    public ResponseEntity<?> depositarContaPoupanca(@RequestBody ContaPoupanca conta, @RequestParam double saldo){
+        if(contaService.depositarContaPoupanca(conta.getIdContaPoupanca(), saldo))return new ResponseEntity<>("Valor depositado com sucesso!", HttpStatus.OK);
+
+        return new ResponseEntity<>("Conta não encontrada ou valor inválido!", HttpStatus.OK);
+
+    }
 }

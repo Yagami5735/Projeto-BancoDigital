@@ -128,9 +128,26 @@ public class ContaService {
         return contaCorrenteRepository.findAll();
     }
 
-    public void depositarContaCorrente(ContaCorrente conta, long id){
-        Optional<ContaCorrente> contaCorrente = contaCorrenteRepository.findById(id);
-        if()
+    public boolean depositarContaCorrente(long id, double valor){
+        Optional<ContaCorrente> contaCorrenteOptional = contaCorrenteRepository.findById(id);
+        if(contaCorrenteOptional.isPresent()) {
+            ContaCorrente contaCorrente = contaCorrenteOptional.get();
+            contaCorrente.depositar(valor);
+            contaCorrenteRepository.save(contaCorrente);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean depositarContaPoupanca(long id, double valor){
+        Optional<ContaPoupanca> contaPoupancaOptional = contaPoupancaRepository.findById(id);
+        if(contaPoupancaOptional.isPresent()) {
+            ContaPoupanca contaPoupanca = contaPoupancaOptional.get();
+            contaPoupanca.depositar(valor);
+            contaPoupancaRepository.save(contaPoupanca);
+            return true;
+        }
+        return false;
     }
 
 }
