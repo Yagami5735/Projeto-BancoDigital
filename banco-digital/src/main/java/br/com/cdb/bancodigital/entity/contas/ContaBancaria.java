@@ -7,5 +7,7 @@ public interface ContaBancaria {
 
     public void transferir(double valor, ContaBancaria conta);
 
+    void transferir(double valor, Pix conta);
+
     public double getSaldo();
 }

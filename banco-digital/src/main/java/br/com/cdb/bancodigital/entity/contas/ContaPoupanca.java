@@ -46,6 +46,11 @@ public class ContaPoupanca implements ContaBancaria {
     }
 
     @Override
+    public void transferir(double valor, Pix conta) {
+        
+    }
+
+    @Override
     public double getSaldo() {
         return saldo;
     }
