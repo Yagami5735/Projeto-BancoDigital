@@ -12,6 +12,10 @@ public class Pix implements ContaBancaria{
     private boolean hasChavePixNumeroTelefone;
     private boolean hasChavePixAleatoria;
 
+    public Pix(){
+
+    }
+
     public boolean criarChavePixEmail(String email){
         if(!hasChavePixEmail){
             this.chavePixEmail = email;
@@ -21,15 +25,33 @@ public class Pix implements ContaBancaria{
         return false;
 
     }
+    public boolean removerChavePixEmail(){
+        if(hasChavePixEmail){
+            chavePixEmail = null;
+            hasChavePixEmail = false;
+            return true;
+        }
+        return false;
+    }
+
 
     public boolean criarChavePixNumeroTelefone(String numeroTelefone){
         if(!hasChavePixNumeroTelefone){
-            this.chavePixNumeroTelefone = numeroTelefone;
+            chavePixNumeroTelefone = numeroTelefone;
             hasChavePixNumeroTelefone = true;
             return true;
         }
         return false;
 
+    }
+
+    public boolean removerChavePixNumeroTelefone(){
+        if(hasChavePixNumeroTelefone){
+            chavePixNumeroTelefone = null;
+            hasChavePixNumeroTelefone = false;
+            return true;
+        }
+        return false;
     }
 
     public boolean criarChavePixAleatoria(){
