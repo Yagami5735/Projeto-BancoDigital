@@ -7,7 +7,7 @@
     import java.time.LocalDate;
 
     @Entity
-    public class ContaCorrente implements ContaBancaria {
+    public class ContaCorrente extends ContaBancaria {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long idContaCorrente;

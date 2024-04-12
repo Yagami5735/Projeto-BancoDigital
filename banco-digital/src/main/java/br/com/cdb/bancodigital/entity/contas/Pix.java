@@ -1,9 +1,14 @@
 package br.com.cdb.bancodigital.entity.contas;
 
+import jakarta.persistence.OneToOne;
+
 import java.util.UUID;
 
-public class Pix implements ContaBancaria{
+public class Pix extends ContaBancaria{
     private double saldo;
+
+    @OneToOne
+    private ContaBancaria contaBancaria;
     private String chavePixEmail;
     private String chavePixNumeroTelefone;
     private String chavePixAleatoria;
@@ -12,8 +17,8 @@ public class Pix implements ContaBancaria{
     private boolean hasChavePixNumeroTelefone;
     private boolean hasChavePixAleatoria;
 
-    public Pix(){
-
+    public Pix(ContaBancaria contaBancaria){
+        this.contaBancaria = contaBancaria;
     }
 
     public boolean criarChavePixEmail(String email){

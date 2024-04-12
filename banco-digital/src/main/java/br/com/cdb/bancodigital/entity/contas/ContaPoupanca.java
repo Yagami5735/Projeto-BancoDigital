@@ -7,7 +7,7 @@ import lombok.Getter;
 import java.time.LocalDate;
 
 @Entity
-public class ContaPoupanca implements ContaBancaria {
+public class ContaPoupanca extends ContaBancaria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
