@@ -150,4 +150,31 @@ public class ContaService {
         return false;
     }
 
+    public boolean transferir(long conta, double valor, long contaDestino){
+        Optional<ContaPoupanca> contaPoupancaOptional = contaPoupancaRepository.findById(conta);
+        Optional<ContaCorrente> contaCorrenteOptional = contaCorrenteRepository.findById(conta);
+
+        Optional<ContaCorrente> contaCorrenteDestinoOptional = contaCorrenteRepository.findById(contaDestino);
+        Optional<ContaPoupanca> contaPoupancaDestinoOptional = contaPoupancaRepository.findById(contaDestino);
+        if(contaPoupancaOptional.isPresent()){
+            if(contaPoupancaDestinoOptional.isPresent()){
+                ContaPoupanca contaPoupanca = contaPoupancaOptional.get();
+                ContaPoupanca contaPoupancaDestino = contaPoupancaDestinoOptional.get();
+                contaPoupanca.transferir(valor, contaPoupancaDestino);
+                return true;
+            }
+        } else if (contaCorrenteOptional.isPresent()) {
+            if(contaCorrenteDestinoOptional.isPresent()){
+                ContaCorrente contaCorrente = contaCorrenteOptional.get();
+                ContaCorrente contaCorrenteDestino = contaCorrenteDestinoOptional.get();
+                contaCorrente.transferir(valor, contaCorrenteDestino);
+                return true;
+
+            }
+
+        }
+
+        return false;
+    }
+
 }

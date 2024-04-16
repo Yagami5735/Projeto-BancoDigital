@@ -1,17 +1,16 @@
 package br.com.cdb.bancodigital.entity.contas;
 
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
 import java.util.UUID;
 
+
 public class Pix extends ContaBancaria{
     private double saldo;
 
-    @OneToOne
-    private ContaBancaria contaBancaria;
-    private String chavePixEmail;
-    private String chavePixNumeroTelefone;
-    private String chavePixAleatoria;
+    @ManyToOne
+    private final ContaBancaria contaBancaria;
 
     private boolean hasChavePixEmail;
     private boolean hasChavePixNumeroTelefone;
@@ -23,7 +22,7 @@ public class Pix extends ContaBancaria{
 
     public boolean criarChavePixEmail(String email){
         if(!hasChavePixEmail){
-            this.chavePixEmail = email;
+            contaBancaria.setChavePixEmail(email);
             hasChavePixEmail = true;
             return true;
         }
@@ -32,7 +31,7 @@ public class Pix extends ContaBancaria{
     }
     public boolean removerChavePixEmail(){
         if(hasChavePixEmail){
-            chavePixEmail = null;
+            contaBancaria.setChavePixEmail(null);
             hasChavePixEmail = false;
             return true;
         }
@@ -42,7 +41,7 @@ public class Pix extends ContaBancaria{
 
     public boolean criarChavePixNumeroTelefone(String numeroTelefone){
         if(!hasChavePixNumeroTelefone){
-            chavePixNumeroTelefone = numeroTelefone;
+            contaBancaria.setChavePixNumeroTelefone(numeroTelefone);
             hasChavePixNumeroTelefone = true;
             return true;
         }
@@ -52,7 +51,7 @@ public class Pix extends ContaBancaria{
 
     public boolean removerChavePixNumeroTelefone(){
         if(hasChavePixNumeroTelefone){
-            chavePixNumeroTelefone = null;
+            contaBancaria.setChavePixNumeroTelefone(null);
             hasChavePixNumeroTelefone = false;
             return true;
         }
@@ -61,12 +60,21 @@ public class Pix extends ContaBancaria{
 
     public boolean criarChavePixAleatoria(){
         if(!hasChavePixAleatoria){
-            this.chavePixAleatoria = UUID.randomUUID().toString();
+            contaBancaria.setChavePixAleatoria(UUID.randomUUID().toString());
             hasChavePixAleatoria = true;
             return true;
         }
         return false;
 
+    }
+
+    public boolean removerChavePixAleatoria(){
+        if(!hasChavePixAleatoria){
+            contaBancaria.setChavePixAleatoria(null);
+            hasChavePixAleatoria = false;
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -108,16 +116,16 @@ public class Pix extends ContaBancaria{
     }
 
     public String getChavePixEmail() {
-        return chavePixEmail;
+        return contaBancaria.getChavePixEmail();
     }
 
 
     public String getChavePixNumeroTelefone() {
-        return chavePixNumeroTelefone;
+        return contaBancaria.getChavePixNumeroTelefone();
     }
 
     public String getChavePixAleatoria() {
-        return chavePixAleatoria;
+        return contaBancaria.getChavePixAleatoria();
     }
 
     public boolean isHasChavePixEmail(){

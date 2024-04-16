@@ -2,7 +2,6 @@ package br.com.cdb.bancodigital.entity.contas;
 
 import br.com.cdb.bancodigital.entity.Cliente;
 import jakarta.persistence.*;
-@Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class ContaBancaria {
     @Id
@@ -12,13 +11,21 @@ public abstract class ContaBancaria {
     @ManyToOne
     private Cliente cliente;
 
-    @OneToOne(mappedBy = "contaBancaria", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne
     private Pix pix;
+
+    private String chavePixEmail;
+
+
+    private String chavePixNumeroTelefone;
+
+
+    private String chavePixAleatoria;
 
     private double saldo;
     public ContaBancaria(Cliente cliente){
         this.cliente = cliente;
-        this.pix = new Pix(this);
+        pix = new Pix(this);
     }
 
     public ContaBancaria(){
@@ -34,10 +41,6 @@ public abstract class ContaBancaria {
     public abstract void transferir(double valor, Pix conta);
     public abstract double getSaldo();
 
-    public void setPix(Pix pix){
-        this.pix = pix;
-    }
-
     public Pix getPix(){
         return pix;
     }
@@ -46,7 +49,30 @@ public abstract class ContaBancaria {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public String getChavePixEmail() {
+        return chavePixEmail;
     }
+
+
+    public String getChavePixNumeroTelefone() {
+        return chavePixNumeroTelefone;
+    }
+
+    public String getChavePixAleatoria() {
+        return chavePixAleatoria;
+    }
+
+    public void setChavePixEmail(String chavePixEmail) {
+        this.chavePixEmail = chavePixEmail;
+    }
+
+    public void setChavePixNumeroTelefone(String chavePixNumeroTelefone) {
+        this.chavePixNumeroTelefone = chavePixNumeroTelefone;
+    }
+
+    public void setChavePixAleatoria(String chavePixAleatoria) {
+        this.chavePixAleatoria = chavePixAleatoria;
+    }
+
+
 }

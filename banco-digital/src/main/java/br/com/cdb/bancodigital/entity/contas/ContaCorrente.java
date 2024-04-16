@@ -18,6 +18,7 @@
         private final double taxaMensal = 12.0;
 
         public ContaCorrente(Cliente cliente){
+            super(cliente);
             this.cliente = cliente;
         }
 
