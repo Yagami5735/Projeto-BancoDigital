@@ -16,7 +16,7 @@ public class ContaPoupanca extends ContaBancaria {
     @ManyToOne
     private Cliente cliente;
     private double saldo;
-    private double taxaVigente = 0.004; // Taxa mensal de 0.4%
+    private double taxaVigente = 0.004;
 
     public ContaPoupanca(Cliente cliente) {
         super(cliente);
